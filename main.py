@@ -1,50 +1,33 @@
 # This example requires the 'message_content' intent.
-
-import discord
-
-
-import discord
+from re import split
+from discord import Client, Message, Intents
 from bot.config import Config
+from bot.audio_events import join, playSound, leave
 
-
-async def voiceConnectionsHandler(message: discord.Message):
-
-    if message.content == "!join":
-        if message.author.voice is None:
-            await message.channel.send("You are not connected to a voice channel.")
-            return
-        #Connect to voice channel
-        await message.author.voice.channel.connect()
-        await message.channel.send("Connected.")
-
-    elif message.content == "!leave":
-        if message.author.voice is None:
-            await message.channel.send("Not connected.")
-            return
-
-        #Disconnect
-        await message.guild.voice_client.disconnect()
-        await message.channel.send("I disconnected.")
-
-
-
-
-class MyClient(discord.Client):
+class MyClient(Client):
     async def on_ready(self):
         print(f'Logged on as {self.user}!')
 
-    async def on_message(self, message:discord.Message):
+    async def on_message(self, message: Message):
         print(f'Message from {message.author}: {message.content}')
-        await voiceConnectionsHandler(message)
 
-intents = discord.Intents.default()
+        splited = message.content
+        print(type(splited))
+
+        if message.content == "!join":
+            await join(message)
+
+        elif message.content == "!play":
+            await playSound(message)
+
+
+        elif message.content == "!leave":
+            await leave(message) 
+
+
+intents = Intents.default()
 intents.guild_messages = True
 
 
 client = MyClient(intents=intents)
 client.run(Config.TOKEN)
-
-
-
-
-
