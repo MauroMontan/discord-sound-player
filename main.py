@@ -1,5 +1,4 @@
 # This example requires the 'message_content' intent.
-from re import split
 from discord import Client, Message, Intents
 from bot.config import Config
 from bot.audio_events import join, playSound, leave
@@ -11,17 +10,21 @@ class MyClient(Client):
     async def on_message(self, message: Message):
         print(f'Message from {message.author}: {message.content}')
 
-        splited = message.content
-        print(type(splited))
+        currentMessage:str = message.content
+        args:list = currentMessage.split(" ")
+        print(args)
 
-        if message.content == "!join":
+        if message.content == "#join":
             await join(message)
 
-        elif message.content == "!play":
-            await playSound(message)
+        elif currentMessage.startswith("#play"):
+            if len(args) == 2:
+                await playSound(message)
+            else:
+                await message.channel.send("i just need 2 args -.-")
+                return
 
-
-        elif message.content == "!leave":
+        elif message.content == "#leave":
             await leave(message) 
 
 
