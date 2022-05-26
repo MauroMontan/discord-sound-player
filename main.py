@@ -12,19 +12,19 @@ class MyClient(Client):
 
         currentMessage:str = message.content
         args:list = currentMessage.split(" ")
-        print(args)
 
-        if message.content == "#join":
+        if message.content == "&join":
             await join(message)
 
-        elif currentMessage.startswith("#play"):
+        elif currentMessage.startswith("&play"):
             if len(args) == 2:
-                await playSound(message)
+                currentAudio = args[1]
+                await playSound(message,currentAudio)
             else:
                 await message.channel.send("i just need 2 args -.-")
                 return
 
-        elif message.content == "#leave":
+        elif message.content == "&leave":
             await leave(message) 
 
 

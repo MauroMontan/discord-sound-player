@@ -19,9 +19,13 @@ async def leave(message: Message):
     await message.channel.send("I disconnected.")
 
 
-async def playSound(message: Message):
+async def playSound(message: Message,currentTrack:str):
     if message.guild.voice_client is None:
         return
-
-    message.guild.voice_client.play(FFmpegPCMAudio("example.mp3"))
-
+    
+    try:
+        print(currentTrack)
+        message.guild.voice_client.play(FFmpegPCMAudio(f"./sounds/{currentTrack}.mp3"))
+   
+    except:
+        await message.channel.send("no sé que tratas de decir.")
