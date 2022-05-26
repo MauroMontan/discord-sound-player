@@ -21,9 +21,8 @@ class MyClient(Client):
                 currentAudio = args[1]
                 await playSound(message,currentAudio)
             else:
-                await message.channel.send("i just need 2 args -.-")
+                await message.channel.send("i just accept two args")
                 return
-
         elif message.content == "&leave":
             await leave(message) 
 

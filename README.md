@@ -16,3 +16,13 @@ then install python dependencies:
 pip install -r requirements.txt
 ```
 
+
+## Environment variables:
+
+this project requires the following environment in the .env file.
+```
+TOKEN="Here goes your discord bot token."
+```
+## sound tracks directories.
+
+All the sounds must be .mp3 format and stored in "/sounds" in the root directory.
